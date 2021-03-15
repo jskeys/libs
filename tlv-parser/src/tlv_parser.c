@@ -1,6 +1,9 @@
 #include "tlv_parser.h"
 
 const char NULL = '\0';
+const uint16_t k_sync_word = 0x5A55;
+const uint32_t k_type_bytes = 2;
+const uint32_t k_length_bytes = 4;
 
 void TLVParser_Init(TLVParser_t* parser)
 {
