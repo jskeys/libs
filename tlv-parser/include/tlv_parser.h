@@ -7,6 +7,10 @@ extern "C" {
 
 #include <stdint.h>
 
+#ifndef TLV_MAX_LENGTH
+#define TLV_MAX_LENGTH 1024
+#endif
+
 typedef enum
 {
     SYNC,
@@ -19,7 +23,7 @@ typedef struct
 {
     uint16_t type;
     uint32_t length;
-    char* value;
+    char value[TLV_MAX_LENGTH];
 } TLVPacket_t;
 
 typedef struct {
