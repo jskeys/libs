@@ -1,5 +1,5 @@
-#ifndef __PARSER__H
-#define __PARSER__H
+#ifndef __TLV_H__
+#define __TLV_H__
 
 #ifdef __cplusplus
 extern "C" {
@@ -12,15 +12,7 @@ extern "C" {
 #endif
 
 // Forward declare `struct TLVParser`
-typedef struct TLVParser *TLVParser_t;
-
-typedef enum
-{
-    SYNC,
-    TYPE,
-    LENGTH,
-    VALUE,
-} TLVParserState_t;
+typedef struct TLVParser_t *TLVParser_t;
 
 typedef struct
 {
@@ -29,8 +21,7 @@ typedef struct
     char value[TLV_MAX_LENGTH];
 } TLVPacket_t;
 
-
-void TLVParser_Init(TLVParser_t);
+void TLVParser_Init(TLVParser_t, uint16_t sync_word);
 uint8_t TLVParser_Parse(TLVParser_t, TLVPacket_t*, char);
 
 #ifdef __cplusplus

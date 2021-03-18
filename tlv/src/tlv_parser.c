@@ -1,19 +1,28 @@
-#include "tlv_parser.h"
+#include "tlv.h"
 
 const char NULL = '\0';
-const uint16_t k_sync_word = 0x5A55;
 const uint32_t k_type_bytes = 2;
 const uint32_t k_length_bytes = 4;
 
-struct TLVParser {
+typedef enum
+{
+    SYNC,
+    TYPE,
+    LENGTH,
+    VALUE,
+} TLVParserState_t;
+
+struct TLVParser_t {
     TLVParserState_t state;
+    uint16_t sync_word;
     uint16_t sync;
     uint32_t count;
 };
 
-void TLVParser_Init(TLVParser_t self)
+void TLVParser_Init(TLVParser_t self, uint16_t sync_word)
 {
     self->state = SYNC;
+    self->sync_word = sync_word;
     self->sync = 0;
     self->count = 0;
 }
@@ -26,7 +35,7 @@ uint8_t TLVParser_Parse(TLVParser_t self, TLVPacket_t* packet, char next)
   {
     case SYNC:
       self->sync = (self->sync << 8) | next;
-      if (self->sync == k_sync_word)
+      if (self->sync == self->sync_word)
       {
         self->state = TYPE;
         self->count = 0;
