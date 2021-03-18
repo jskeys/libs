@@ -12,4 +12,9 @@ OBJ = $(patsubst %.c, %.o, $(patsubst $(SDIR)/%, $(ODIR)/%, $(SRC)))
 # right are the dependencies required to make that. If a dependency does
 # not exist, the makefile will look for a rule to make it.
 all:
-	$(MAKE) -C "./tlv-parser" all
+	$(MAKE) -C "./tlv" all
+
+format:
+	@find . -regex ".*\.[ch]p*" | xargs clang-format -i -style=file --verbose
+
+.PHONY: app format
