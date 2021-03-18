@@ -11,6 +11,9 @@ extern "C" {
 #define TLV_MAX_LENGTH 1024
 #endif
 
+// Forward declare `struct TLVParser`
+typedef struct TLVParser *TLVParser_t;
+
 typedef enum
 {
     SYNC,
@@ -26,14 +29,9 @@ typedef struct
     char value[TLV_MAX_LENGTH];
 } TLVPacket_t;
 
-typedef struct {
-    TLVParserState_t state;
-    uint16_t sync;
-    uint32_t count;
-} TLVParser_t;
 
-void TLVParser_Init(TLVParser_t*);
-uint8_t TLVParser_Parse(TLVParser_t*, TLVPacket_t*, char);
+void TLVParser_Init(TLVParser_t);
+uint8_t TLVParser_Parse(TLVParser_t, TLVPacket_t*, char);
 
 #ifdef __cplusplus
 }
