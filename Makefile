@@ -11,10 +11,21 @@ OBJ = $(patsubst %.c, %.o, $(patsubst $(SDIR)/%, $(ODIR)/%, $(SRC)))
 # The item to the left is what you're trying to make. The items to the
 # right are the dependencies required to make that. If a dependency does
 # not exist, the makefile will look for a rule to make it.
-all:
-	$(MAKE) -C "./tlv" all
+all: $(OBJ)
+
+$(ODIR)/%.o: $(SDIR)/%.c $(DEP) $(ODIR)
+	$(CC) -c $< -o $@ $(CFLAGS)
+
+$(ODIR):
+	$(shell mkdir -p $(ODIR))
 
 format:
-	@find . -regex ".*\.[ch]p*" | xargs clang-format -i -style=file --verbose
+	@find ./src ./include -regex ".*\.[ch]p*" | xargs clang-format -i -style=file --verbose
 
-.PHONY: app format
+doc: $(SRC)
+	$(shell doxygen)
+
+clean:
+	rm -rf $(ODIR) ./doc/html ./doc/latex
+
+.PHONY: all format
