@@ -1,58 +1,59 @@
+#include <stdio.h>
+
 #include "tlv.h"
 
-const char NULL = '\0';
 const uint32_t k_type_bytes = 2;
 const uint32_t k_length_bytes = 4;
 
-void TLVParser_Init(TLVParser_t *self, uint16_t sync_word)
+void TLVParser_Init(TLVParser_t *this, uint16_t sync_word)
 {
-    self->state = SYNC;
-    self->sync_word = sync_word;
-    self->sync = 0;
-    self->count = 0;
+    this->state = SYNC;
+    this->sync_word = sync_word;
+    this->sync = 0;
+    this->count = 0;
 }
 
 /// Process an incoming byte. Returns 1 when a complete packet has been processed. A
 /// packet is considered complete when `packet->length` bytes have been written to
 /// `packet->data`.
-uint8_t TLVParser_Parse(TLVParser_t *self, TLVPacket_t *packet, char c)
+uint8_t TLVParser_Parse(TLVParser_t *this, TLVPacket_t *packet, char c)
 {
-    switch (self->state)
+    switch (this->state)
     {
         case SYNC:
-            self->sync = (self->sync << 8) | c;
-            if (self->sync == self->sync_word)
+            this->sync = (this->sync << 8) | c;
+            if (this->sync == this->sync_word)
             {
-                self->state = TYPE;
-                self->count = 0;
+                this->state = TYPE;
+                this->count = 0;
             }
             return 0;
         case TYPE:
             packet->type = (packet->type << 8) | c;
-            self->count++;
-            if (self->count == k_type_bytes)
+            this->count++;
+            if (this->count == k_type_bytes)
             {
-                self->state = LENGTH;
-                self->count = 0;
+                this->state = LENGTH;
+                this->count = 0;
             }
             return 0;
         case LENGTH:
             packet->length = (packet->length << 8) | c;
-            self->count++;
-            if (self->count == k_length_bytes)
+            this->count++;
+            if (this->count == k_length_bytes)
             {
-                self->state = VALUE;
-                self->count = 0;
+                this->state = VALUE;
+                this->count = 0;
             }
             return 0;
         case VALUE:
-            *(packet->value + self->count) = c;
-            self->count++;
-            if (self->count == packet->length)
+            *(packet->value + this->count) = c;
+            this->count++;
+            if (this->count == packet->length)
             {
-                // Write NULL to after message for string selfs.
-                *(packet->value + packet->length) = NULL;
-                self->state = SYNC;
+                // Write NULL to after message for string thiss.
+                *(packet->value + packet->length) = '\0';
+                this->state = SYNC;
                 return 1;
             }
             return 0;

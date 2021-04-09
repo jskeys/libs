@@ -32,11 +32,11 @@ extern "C"
     {
         uint16_t type;
         uint32_t length;
-        char value[TLV_MAX_LENGTH];
+        char *value;
     } TLVPacket_t;
 
-    void TLVParser_Init(TLVParser_t *parser, uint16_t sync_word);
-    uint8_t TLVParser_Parse(TLVParser_t *parser, TLVPacket_t *packet, char c);
+    void TLVParser_Init(TLVParser_t *, uint16_t sync_word);
+    uint8_t TLVParser_Parse(TLVParser_t *, TLVPacket_t *packet, char c);
 
 #ifdef __cplusplus
 }
