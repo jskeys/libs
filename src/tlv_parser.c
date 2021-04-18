@@ -42,10 +42,22 @@ uint8_t TLVParser_Parse(TLVParser_t *this, TLVPacket_t *packet, char c)
             this->count++;
             if (this->count == k_length_bytes)
             {
-                this->state = VALUE;
                 this->count = 0;
+                if (packet->length)
+                {
+                    this->state = VALUE;
+                    return 0;
+                }
+                else
+                {
+                    this->state = SYNC;
+                    return 1;
+                }
             }
-            return 0;
+            else
+            {
+                return 0;
+            }
         case VALUE:
             *(packet->value + this->count) = c;
             this->count++;
