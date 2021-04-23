@@ -7,7 +7,7 @@ const uint32_t k_length_bytes = 4;
 
 void TLVParser_Init(TLVParser_t *this, uint16_t sync_word)
 {
-    this->state = SYNC;
+    this->state = GET_SYNC;
     this->sync_word = sync_word;
     this->sync = 0;
     this->count = 0;
@@ -20,24 +20,27 @@ uint8_t TLVParser_Parse(TLVParser_t *this, TLVPacket_t *packet, char c)
 {
     switch (this->state)
     {
-        case SYNC:
+        case GET_SYNC:
             this->sync = (this->sync << 8) | c;
             if (this->sync == this->sync_word)
             {
-                this->state = TYPE;
+                this->state = GET_TYPE;
                 this->count = 0;
             }
             return 0;
-        case TYPE:
+        case GET_TYPE:
             packet->type = (packet->type << 8) | c;
             this->count++;
             if (this->count == k_type_bytes)
             {
-                this->state = LENGTH;
+                this->state = GET_LENGTH;
                 this->count = 0;
             }
             return 0;
-        case LENGTH:
+        case GET_LENGTH:
+            // Parse the packet length. In the case of a zero-length value, return
+            // 1 and go back to the `GET_SYNC` state. Otherwise, enter the
+            // `GET_VALUE` state
             packet->length = (packet->length << 8) | c;
             this->count++;
             if (this->count == k_length_bytes)
@@ -45,12 +48,12 @@ uint8_t TLVParser_Parse(TLVParser_t *this, TLVPacket_t *packet, char c)
                 this->count = 0;
                 if (packet->length)
                 {
-                    this->state = VALUE;
+                    this->state = GET_VALUE;
                     return 0;
                 }
                 else
                 {
-                    this->state = SYNC;
+                    this->state = GET_SYNC;
                     return 1;
                 }
             }
@@ -58,14 +61,14 @@ uint8_t TLVParser_Parse(TLVParser_t *this, TLVPacket_t *packet, char c)
             {
                 return 0;
             }
-        case VALUE:
+        case GET_VALUE:
             *(packet->value + this->count) = c;
             this->count++;
             if (this->count == packet->length)
             {
-                // Write NULL to after message for string thiss.
+                // Write '\0' after value.
                 *(packet->value + packet->length) = '\0';
-                this->state = SYNC;
+                this->state = GET_SYNC;
                 return 1;
             }
             return 0;

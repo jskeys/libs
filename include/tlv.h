@@ -14,10 +14,10 @@ extern "C"
 
     typedef enum
     {
-        SYNC,
-        TYPE,
-        LENGTH,
-        VALUE,
+        GET_SYNC,
+        GET_TYPE,
+        GET_LENGTH,
+        GET_VALUE,
     } TLVParserState_t;
 
     typedef struct
