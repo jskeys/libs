@@ -24,9 +24,9 @@ extern "C"
 #if __BYTE_ORDER == __ORDER_LITTLE_ENDIAN__
         return swap_16(x);
 #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-        return x;
+    return x;
 #else
-#       error unsupported endianness
+#error unsupported endianness
 #endif
     }
 
@@ -35,9 +35,9 @@ extern "C"
 #if __BYTE_ORDER == __ORDER_LITTLE_ENDIAN__
         return swap_32(x);
 #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-        return x;
+    return x;
 #else
-#       error unsupported endianness
+#error unsupported endianness
 #endif
     }
 
@@ -46,9 +46,9 @@ extern "C"
 #if __BYTE_ORDER == __ORDER_LITTLE_ENDIAN__
         return x;
 #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-        return swap_16(x);
+    return swap_16(x);
 #else
-#       error unsupported endianness
+#error unsupported endianness
 #endif
     }
 
@@ -57,9 +57,9 @@ extern "C"
 #if __BYTE_ORDER == __ORDER_LITTLE_ENDIAN__
         return x;
 #elif __BYTE_ORDER__ == __ORDER_BIG_ENDIAN__
-        return swap_32(x);
+    return swap_32(x);
 #else
-#       error unsupported endianness
+#error unsupported endianness
 #endif
     }
 
