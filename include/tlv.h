@@ -35,10 +35,10 @@ extern "C"
         char *value;
     } TLVPacket_t;
 
-    int32_t TLVPacket_Copy(const TLVPacket_t *packet, uint8_t *buffer);
+    int32_t tlv_packet_copy(const TLVPacket_t *packet, uint8_t *buffer);
 
-    void TLVParser_Init(TLVParser_t *, uint16_t sync_word);
-    uint8_t TLVParser_Parse(TLVParser_t *, TLVPacket_t *packet, char c);
+    void tlv_parser_parser_init(TLVParser_t *, uint16_t sync_word);
+    uint8_t tlv_parser_parse(TLVParser_t *, TLVPacket_t *packet, char c);
 
 #ifdef __cplusplus
 }
