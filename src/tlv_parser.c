@@ -19,7 +19,7 @@ int32_t tlv_packet_copy(const TLVPacket_t *packet, uint8_t *buffer)
     return offset + packet->length;
 }
 
-void tlv_parser_parser_init(TLVParser_t *this, uint16_t sync_word)
+void tlv_parser_init(TLVParser_t *this, uint16_t sync_word)
 {
     this->state = GET_SYNC;
     this->sync_word = sync_word;

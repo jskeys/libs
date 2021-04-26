@@ -37,7 +37,7 @@ extern "C"
 
     int32_t tlv_packet_copy(const TLVPacket_t *packet, uint8_t *buffer);
 
-    void tlv_parser_parser_init(TLVParser_t *, uint16_t sync_word);
+    void tlv_parser_init(TLVParser_t *, uint16_t sync_word);
     uint8_t tlv_parser_parse(TLVParser_t *, TLVPacket_t *packet, char c);
 
 #ifdef __cplusplus
