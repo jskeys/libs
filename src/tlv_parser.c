@@ -1,9 +1,23 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "tlv.h"
 
 const uint32_t k_type_bytes = 2;
 const uint32_t k_length_bytes = 4;
+
+int32_t TLVPacket_Copy(const TLVPacket_t *packet, uint8_t *buffer)
+{
+    int32_t offset = 0;
+
+    memcpy(buffer + offset, &packet->type, sizeof(packet->type));
+    offset += sizeof(packet->type);
+    memcpy(buffer + offset, &packet->length, sizeof(packet->length));
+    offset += sizeof(packet->length);
+    memcpy(buffer + offset, packet->value, packet->length);
+
+    return offset + packet->length;
+}
 
 void TLVParser_Init(TLVParser_t *this, uint16_t sync_word)
 {

@@ -35,6 +35,8 @@ extern "C"
         char *value;
     } TLVPacket_t;
 
+    int32_t TLVPacket_Copy(const TLVPacket_t *packet, uint8_t *buffer);
+
     void TLVParser_Init(TLVParser_t *, uint16_t sync_word);
     uint8_t TLVParser_Parse(TLVParser_t *, TLVPacket_t *packet, char c);
 
