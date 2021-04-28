@@ -43,7 +43,7 @@ uint8_t traverse(LL_Item_t **const item, const char *key)
 }
 
 // Remove item from table
-Status_t HT_Remove(LL_Item_t *table[], char *key)
+Status_t ht_remove(LL_Item_t *table[], char *key)
 {
     LL_Item_t *item, *list;
 
@@ -75,7 +75,7 @@ Status_t HT_Remove(LL_Item_t *table[], char *key)
 
 // Insert a key-val pair into the table or update the val of an existing
 // key-val pair. Returns `STATUS_NULL_PTR` if either `key` or `val` is NULL.
-Status_t HT_Insert(LL_Item_t *table[], char *key, char *val)
+Status_t ht_insert(LL_Item_t *table[], char *key, char *val)
 {
     if (!key || !val)
     {

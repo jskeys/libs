@@ -25,9 +25,9 @@ extern "C"
 
     typedef struct LL_Item LL_Item_t;
 
-    Status_t HT_Get(char *key);
-    Status_t HT_Insert(LL_Item_t **table, char *key, char *value);
-    Status_t HT_Remove(LL_Item_t **table, char *key);
+    Status_t ht_get(char *key);
+    Status_t ht_insert(LL_Item_t **table, char *key, char *value);
+    Status_t ht_remove(LL_Item_t **table, char *key);
 
 #ifdef __cplusplus
 }

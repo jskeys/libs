@@ -6,7 +6,7 @@
 const uint32_t k_type_bytes = 2;
 const uint32_t k_length_bytes = 4;
 
-int32_t TLVPacket_Copy(const TLVPacket_t *packet, uint8_t *buffer)
+int32_t tlv_packet_copy(const TLVPacket_t *packet, uint8_t *buffer)
 {
     int32_t offset = 0;
 
@@ -19,7 +19,7 @@ int32_t TLVPacket_Copy(const TLVPacket_t *packet, uint8_t *buffer)
     return offset + packet->length;
 }
 
-void TLVParser_Init(TLVParser_t *this, uint16_t sync_word)
+void tlv_parser_parser_init(TLVParser_t *this, uint16_t sync_word)
 {
     this->state = GET_SYNC;
     this->sync_word = sync_word;
@@ -30,7 +30,7 @@ void TLVParser_Init(TLVParser_t *this, uint16_t sync_word)
 /// Process an incoming byte. Returns 1 when a complete packet has been processed. A
 /// packet is considered complete when `packet->length` bytes have been written to
 /// `packet->data`.
-uint8_t TLVParser_Parse(TLVParser_t *this, TLVPacket_t *packet, char c)
+uint8_t tlv_parser_parse(TLVParser_t *this, TLVPacket_t *packet, char c)
 {
     switch (this->state)
     {
