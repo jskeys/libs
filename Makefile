@@ -40,4 +40,4 @@ doc: $(SRC)
 clean:
 	rm -rf $(ODIR) ./doc/html ./doc/latex
 
-.PHONY: all format
+.PHONY: all doc format
