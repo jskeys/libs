@@ -6,8 +6,6 @@ extern "C"
 {
 #endif
 
-#include "stdint.h"
-
     typedef enum
     {
         STATUS_OKAY,
