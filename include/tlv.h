@@ -33,10 +33,11 @@ extern "C"
         uint16_t sync_word;
         uint16_t sync;
         uint32_t num_state_bytes_parsed;
+        uint32_t num_chars_parsed;
     } TLVParser_t;
 
     int32_t tlv_write_packet_to_buffer(const TLVPacket_t *packet, uint8_t *buffer);
-    uint8_t tlv_process_character(TLVParser_t *, TLVPacket_t *packet, char c);
+    uint8_t tlv_process_char(TLVParser_t *, TLVPacket_t *packet, char c);
     void tlv_initialize_parser(TLVParser_t *, uint16_t sync_word);
     void tlv_print_packet(const TLVPacket_t *packet);
 

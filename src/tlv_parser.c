@@ -46,13 +46,15 @@ void tlv_initialize_parser(TLVParser_t *parser, uint16_t sync_word)
     parser->sync_word = sync_word;
     parser->sync = 0;
     parser->num_state_bytes_parsed = 0;
+    parser->num_chars_parsed = 0;
 }
 
 /**
  * @brief Process one byte using the specified parser
  */
-uint8_t tlv_process_character(TLVParser_t *parser, TLVPacket_t *packet, char c)
+uint8_t tlv_process_char(TLVParser_t *parser, TLVPacket_t *packet, char c)
 {
+    parser->num_chars_parsed ++;
     switch (parser->state)
     {
         case PARSE_SYNC:
